@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>isprime</title>
+  </head>
+  <body>
+    <h1>isprime</h1>
+    <form onsubmit="main()">
+      <input type="number" id="number" value="23"/>
+      <input type="submit" value="Is this prime?"/>
+    </form>
+    <div id="stdout">
+    </div>
+    <script>
+
+function isprime(n) {
+
+  if (n < 2)
+    return false;
+
+  const array = Array(n+1);
+  array[0] = array[1] = false;
+  for (let i = 2; i <= n; i++)
+    array[i] = true;
+  for (let i = 2; i*i <= n; i++)
+    if (array[i])
+      for (let j = i*i; j <= n; j += i)
+        array[j] = false;
+
+  return array[n];
+}
+
+function main() {
+  'strict'
+
+  event.preventDefault();
+
+  const n = Number(document.getElementById('number').value);
+
+  let message = '';
+  if (isprime(n))
+    message = '' + String(n) + ' is a prime number.';
+  else
+    message = '' + String(n) + ' is NOT a prime number.';
+
+  document.getElementById("stdout").innerHTML += '<p>' + message + '</p>';
+}
+
+    </script>
+  </body>
+</html>
