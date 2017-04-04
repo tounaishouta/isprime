@@ -14,37 +14,43 @@
     </div>
     <script>
 
-function isprime(n) {
+function decompose(n) {
+  'strict';
 
-  if (n < 2)
-    return false;
+  const factors = [];
 
-  const array = Array(n+1);
-  array[0] = array[1] = false;
-  for (let i = 2; i <= n; i++)
-    array[i] = true;
-  for (let i = 2; i*i <= n; i++)
-    if (array[i])
-      for (let j = i*i; j <= n; j += i)
-        array[j] = false;
+  for (let d = 2; d*d <= n; d++) {
+    while (n%d == 0) {
+      n /= d;
+      factors.push(d);
+    }
+  }
 
-  return array[n];
+  if (n > 1)
+    factors.push(n);
+
+  return factors;
+}
+
+function message(n) {
+  'strict';
+
+  if (!Number.isInteger(n) || n <= 0)
+    return '' + n + ' is not a positive integer.';
+
+  const factors = decompose(n);
+
+  if (factors.length == 1)
+    return '' + n + ' is a prime number.';
+  else
+    return '' + n + ' can be decomposed into ' + factors.join('x') + '.';
 }
 
 function main() {
-  'strict'
-
+  'strict';
   event.preventDefault();
-
   const n = Number(document.getElementById('number').value);
-
-  let message = '';
-  if (isprime(n))
-    message = '' + String(n) + ' is a prime number.';
-  else
-    message = '' + String(n) + ' is NOT a prime number.';
-
-  document.getElementById("stdout").innerHTML += '<p>' + message + '</p>';
+  document.getElementById("stdout").innerHTML += '<p>' + message(n) + '</p>';
 }
 
     </script>
