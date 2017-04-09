@@ -6,12 +6,15 @@
   </head>
   <body>
     <h1>isprime</h1>
-    <form onsubmit="main()">
-      <input type="number" id="number" value="23"/>
-      <input type="submit" value="Is this prime?"/>
-    </form>
     <div id="stdout">
     </div>
+    <hr/>
+    <form onsubmit="main()">
+      <p>
+      <input type="number" id="number" value="23"/>
+      <input type="submit" value="Is this prime?"/>
+      </p>
+    </form>
     <script>
 
 function decompose(n) {
@@ -38,6 +41,9 @@ function message(n) {
   if (!Number.isInteger(n) || n <= 0)
     return '' + n + ' is not a positive integer.';
 
+  if (n == 1)
+    return '' + n + ' is a unit.';
+
   const factors = decompose(n);
 
   if (factors.length == 1)
@@ -50,7 +56,9 @@ function main() {
   'strict';
   event.preventDefault();
   const n = Number(document.getElementById('number').value);
-  document.getElementById("stdout").innerHTML += '<p>' + message(n) + '</p>';
+  const p = document.createElement('p');
+  p.textContent = message(n);
+  document.getElementById('stdout').appendChild(p);
 }
 
     </script>
